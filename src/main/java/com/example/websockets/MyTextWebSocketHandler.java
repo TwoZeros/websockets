@@ -1,6 +1,7 @@
 package com.example.websockets;
 
 import com.example.websockets.dto.OperationDto;
+import com.example.websockets.models.OperationType;
 import com.example.websockets.models.interfaces.IResult;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,13 +36,14 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
+        router.rout(OperationType.logout, new TextMessage("logout"), session);
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
         OperationDto operation = mapper.readValue(new StringReader(message.getPayload()), OperationDto.class);
-        IResult result =router.rout(operation.getOperation(), message, session);
-        session.sendMessage(new TextMessage(result.toJson()));
+        router.rout(operation.getOperation(), message, session);
+
     }
 }

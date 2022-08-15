@@ -89,12 +89,22 @@ public class UserService implements IUserService {
             user.setLastAuthDate(new Date());
             var listOperation = simpleNumberGenerator.generateNumbers(MAX_NUMBER_OF_OPERATION,
                     COUNT_AVAILABLE_OPERATION);
-            authUser.put(session, new UserData(user,listOperation));
+            authUser.put(session, new UserData(user,listOperation,false));
 
             return new ResultOperation(OperationType.auth, true);
         } catch (IOException | UserNotFoundException e) {
             return new ResultOperation(OperationType.auth, false);
         }
+    }
+
+    @Override
+    public void logout(WebSocketSession session) {
+        authUser.remove(session);
+    }
+
+    @Override
+    public ConcurrentHashMap<WebSocketSession, UserData> getAuthUserData() {
+        return authUser;
     }
 
     @Override
@@ -116,15 +126,10 @@ public class UserService implements IUserService {
             return new ResultOperation(OperationType.change_user_status, false);
         }
     }
-
-    public Boolean userNotUnique(User user) {
-        return users.stream().anyMatch(x -> x.getLogin().equals(user.getLogin()));
-    }
-
-
     @Override
     public IResult editUserPassword(TextMessage data) {
         try {
+            System.out.println(data.getPayload());
             final ChangePasswordDto changePasswordDto = mapper.readValue(
                     new StringReader(data.getPayload()), ChangePasswordDto.class);
             User user = users.stream()
@@ -135,13 +140,20 @@ public class UserService implements IUserService {
                     .orElseThrow(UserNotFoundException::new);
 
             user.setPassword(getDecodePassword(changePasswordDto.getNewPassword()));
-
             return new ResultOperation(OperationType.edit_user_password, true);
 
         } catch (IOException | UserNotFoundException e) {
             return new ResultOperation(OperationType.edit_user_password, false);
         }
     }
+
+
+    public Boolean userNotUnique(User user) {
+        return users.stream().anyMatch(x -> x.getLogin().equals(user.getLogin()));
+    }
+
+
+
 
     public String getDecodePassword(String password) {
         return Hashing.sha256()

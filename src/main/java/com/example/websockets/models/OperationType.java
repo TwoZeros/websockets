@@ -6,5 +6,8 @@ public enum OperationType {
     edit_user_password,
     get_user_list,
     new_result,
-    change_user_status
+    change_user_status,
+    start_job,
+    stop_job,
+    logout
 }

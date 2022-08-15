@@ -4,5 +4,5 @@ import org.springframework.web.socket.WebSocketSession;
 
 public interface INotificationService {
     void startNotify(WebSocketSession session);
-    void endNotify(WebSocketSession session);
+    void stopNotify(WebSocketSession session);
 }
