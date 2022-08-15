@@ -1,5 +1,6 @@
 package com.example.websockets.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -16,7 +17,8 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @JsonProperty("last_auth»")
+    @JsonProperty("last_auth")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date lastAuthDate;
     @JsonProperty("status")
     private boolean active;

@@ -41,7 +41,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
         OperationDto operation = mapper.readValue(new StringReader(message.getPayload()), OperationDto.class);
-        IResult result =router.rout(operation.getOperation(), message);
+        IResult result =router.rout(operation.getOperation(), message, session);
         session.sendMessage(new TextMessage(result.toJson()));
     }
 }

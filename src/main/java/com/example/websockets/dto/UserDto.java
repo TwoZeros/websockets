@@ -1,4 +1,4 @@
-package com.example.websockets.models;
+package com.example.websockets.dto;
 
 import lombok.*;
 
