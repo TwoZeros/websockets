@@ -18,7 +18,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @JsonProperty("last_auth")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", timezone="Europe/Moscow")
     private Date lastAuthDate;
     @JsonProperty("status")
     private boolean active;

@@ -19,9 +19,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,11 +32,14 @@ public class UserService implements IUserService {
     private final static ConcurrentHashMap<WebSocketSession, UserData> authUser = new ConcurrentHashMap<>();
     private static AtomicInteger id = new AtomicInteger();
     private final ObjectMapper mapper;
+    private final Calendar calendar;
     private final ISimpleNumberGenerator simpleNumberGenerator;
 
     public UserService(ObjectMapper mapper, ISimpleNumberGenerator simpleNumberGenerator) {
         this.mapper = mapper;
         this.simpleNumberGenerator = simpleNumberGenerator;
+        calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
     }
 
     @Override
@@ -86,7 +87,7 @@ public class UserService implements IUserService {
                             (getDecodePassword(userDto.getPassword())))
                     )
                     .findFirst().orElseThrow(UserNotFoundException::new);
-            user.setLastAuthDate(new Date());
+            user.setLastAuthDate(calendar.getTime());
             var listOperation = simpleNumberGenerator.generateNumbers(MAX_NUMBER_OF_OPERATION,
                     COUNT_AVAILABLE_OPERATION);
             authUser.put(session, new UserData(user,listOperation,false));
@@ -129,7 +130,6 @@ public class UserService implements IUserService {
     @Override
     public IResult editUserPassword(TextMessage data) {
         try {
-            System.out.println(data.getPayload());
             final ChangePasswordDto changePasswordDto = mapper.readValue(
                     new StringReader(data.getPayload()), ChangePasswordDto.class);
             User user = users.stream()
