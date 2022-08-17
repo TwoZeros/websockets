@@ -22,7 +22,7 @@ public class MyTextWebSocketHandler extends TextWebSocketHandler {
     private final ObjectMapper mapper;
     private final IRouter router;
 
-    public  MyTextWebSocketHandler( ObjectMapper mapper, IRouter router ) {
+    public MyTextWebSocketHandler(ObjectMapper mapper, IRouter router) {
         this.mapper = mapper;
         this.router = router;
     }

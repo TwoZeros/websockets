@@ -91,7 +91,7 @@ public class UserService implements IUserService {
             user.setLastAuthDate(calendar.getTime());
             var listOperation = simpleNumberGenerator.generateNumbers(MAX_NUMBER_OF_OPERATION,
                     COUNT_AVAILABLE_OPERATION);
-            authUser.put(session, new UserData(user,listOperation,false));
+            authUser.put(session, new UserData(user, listOperation, false));
 
             return new ResultOperation(OperationType.auth, true);
         } catch (IOException | UserNotFoundException e) {
@@ -128,6 +128,7 @@ public class UserService implements IUserService {
             return new ResultOperation(OperationType.change_user_status, false);
         }
     }
+
     @Override
     public IResult editUserPassword(TextMessage data) {
         try {
@@ -152,8 +153,6 @@ public class UserService implements IUserService {
     public Boolean userNotUnique(User user) {
         return users.stream().anyMatch(x -> x.getLogin().equals(user.getLogin()));
     }
-
-
 
 
     public String getDecodePassword(String password) {

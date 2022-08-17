@@ -1,8 +1,12 @@
 package com.example.websockets.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
@@ -15,6 +19,7 @@ public class UserData {
     private List<Integer> availableOperation;
     private boolean isSubscribeNotification;
     private final ConcurrentLinkedQueue<OperationHistory> operationHistory = new ConcurrentLinkedQueue<>();
+
     public UserData(User user, List<Integer> availableOperation, boolean isSubscribeNotification) {
         this.user = user;
         this.availableOperation = availableOperation;
@@ -25,9 +30,8 @@ public class UserData {
         List<Integer> operationList = list.stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        operationHistory.offer(new OperationHistory(date,operationList));
+        operationHistory.offer(new OperationHistory(date, operationList));
     }
-
 
 
 }

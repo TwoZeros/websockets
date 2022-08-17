@@ -2,7 +2,6 @@ package com.example.websockets.models;
 
 import com.example.websockets.models.interfaces.IResult;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRawValue;
 import lombok.Getter;
 import lombok.Setter;
 
