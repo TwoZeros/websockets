@@ -1,5 +1,6 @@
-package com.example.websockets;
+package com.example.websockets.services;
 
+import com.example.websockets.services.interfaces.IRouter;
 import com.example.websockets.models.OperationType;
 import com.example.websockets.models.interfaces.IResult;
 import com.example.websockets.services.interfaces.INotificationService;

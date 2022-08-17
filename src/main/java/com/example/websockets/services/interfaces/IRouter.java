@@ -1,4 +1,4 @@
-package com.example.websockets;
+package com.example.websockets.services.interfaces;
 
 import com.example.websockets.models.OperationType;
 import com.example.websockets.models.interfaces.IResult;

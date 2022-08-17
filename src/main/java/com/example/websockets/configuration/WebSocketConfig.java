@@ -1,6 +1,7 @@
-package com.example.websockets;
+package com.example.websockets.configuration;
 
 
+import com.example.websockets.MyTextWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.*;
