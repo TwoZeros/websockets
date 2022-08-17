@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 public class NotificationService implements INotificationService {
     private final static int NOTIFY_DELAY = 10;
     private final static int TIME_STORE_HISTORY = 5;
+    private final static int COUNT_GROUP_OPERATION = 4;
+    private final static int COUNT_ELEM_IN_GROUP = 5;
     private final IUserService userService;
     private final Random random = new Random();
     private final ObjectMapper mapper;
@@ -63,9 +65,9 @@ public class NotificationService implements INotificationService {
 
     public List<List<Integer>> generateNotification(UserData userData) {
         List<List<Integer>> resultList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < COUNT_GROUP_OPERATION; i++) {
             List<Integer> list = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < COUNT_ELEM_IN_GROUP; j++) {
                 int idx = random.nextInt(0, 100);
                 int value = userData.getAvailableOperation().get(idx);
                 list.add(value);
