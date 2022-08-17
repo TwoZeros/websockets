@@ -87,6 +87,7 @@ public class UserService implements IUserService {
                             (getDecodePassword(userDto.getPassword())))
                     )
                     .findFirst().orElseThrow(UserNotFoundException::new);
+            calendar.setTimeInMillis(new Date().getTime());
             user.setLastAuthDate(calendar.getTime());
             var listOperation = simpleNumberGenerator.generateNumbers(MAX_NUMBER_OF_OPERATION,
                     COUNT_AVAILABLE_OPERATION);
